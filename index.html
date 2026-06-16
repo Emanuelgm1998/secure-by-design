@@ -1,127 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure by Design | Emanuel G. Michea</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Emanuel G. Michea — Cloud Security & DevSecOps Engineer. AWS-first infrastructure, Zero Trust architecture, Terraform IaC." />
+  <title>Emanuel G. Michea · Cloud Security Engineer</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b1220;
-    color: #ffffff;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
-header {
-    padding: 80px 20px;
-    text-align: center;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-}
+  <style>
+    :root {
+      --bg:        #070b14;
+      --surface:   #0d1424;
+      --border:    #1a2540;
+      --aws:       #FF9900;
+      --aws-dim:   #cc7a00;
+      --teal:      #00d4aa;
+      --teal-dim:  #00a882;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --mono:      'IBM Plex Mono', monospace;
+      --sans:      'Inter', sans-serif;
+      --display:   'Syne', sans-serif;
+    }
 
-h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-h2 {
-    color: #38bdf8;
-    font-weight: normal;
-}
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 60px;
+      background: rgba(7, 11, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { font-family: var(--mono); font-size: 0.78rem; color: var(--aws); letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal); }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 40px 20px;
-}
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 100px clamp(1.5rem, 5vw, 4rem) 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,153,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,153,0,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 80%);
+    }
+    .hero-inner { position: relative; max-width: 860px; width: 100%; }
+    .hero-eyebrow { font-family: var(--mono); font-size: 0.72rem; color: var(--aws); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--aws); }
+    .hero-name { font-family: var(--display); font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: #fff; }
+    .hero-title { font-family: var(--display); font-size: clamp(1.1rem, 3vw, 1.9rem); font-weight: 700; color: var(--teal); margin-bottom: 1.75rem; letter-spacing: -0.01em; }
+    .hero-bio { font-size: 1.05rem; color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.75; }
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 1rem; }
 
-.section {
-    margin-bottom: 60px;
-}
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 4px; font-family: var(--mono); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-primary { background: var(--aws); color: #000; }
+    .btn-primary:hover { background: var(--aws-dim); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+    .btn-ghost:hover { background: rgba(0, 212, 170, 0.08); transform: translateY(-1px); }
+    .btn-muted { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-muted:hover { color: var(--text); border-color: var(--muted); }
 
-.card {
-    background: #111827;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #1f2937;
-}
+    .stack-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem clamp(1.5rem, 5vw, 4rem); display: flex; align-items: center; gap: 2.5rem; overflow-x: auto; scrollbar-width: none; }
+    .stack-bar::-webkit-scrollbar { display: none; }
+    .stack-label { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .stack-items { display: flex; gap: 2rem; align-items: center; flex-wrap: nowrap; }
+    .stack-item { font-family: var(--mono); font-size: 0.75rem; color: var(--text); white-space: nowrap; opacity: 0.7; transition: opacity 0.2s; }
+    .stack-item:hover { opacity: 1; }
+    .stack-item.highlight { color: var(--aws); opacity: 1; }
 
-a {
-    color: #38bdf8;
-    text-decoration: none;
-}
+    section { padding: 100px clamp(1.5rem, 5vw, 4rem); max-width: 1100px; margin: 0 auto; }
+    .section-label { font-family: var(--mono); font-size: 0.68rem; color: var(--aws); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .section-heading { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 800; color: #fff; margin-bottom: 3rem; letter-spacing: -0.02em; }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    border-top: 1px solid #1f2937;
-    color: #94a3b8;
-}
-</style>
+    .aws-focus { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--aws); border-radius: 8px; padding: 2rem 2.5rem; margin-bottom: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .aws-focus-header { grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .aws-badge { font-family: var(--mono); font-size: 0.65rem; background: rgba(255,153,0,0.12); color: var(--aws); border: 1px solid rgba(255,153,0,0.3); border-radius: 3px; padding: 0.2rem 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .aws-focus h3 { font-family: var(--display); font-size: 1.2rem; font-weight: 700; color: #fff; }
+    .aws-service-list { list-style: none; }
+    .aws-service-list li { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); padding: 0.4rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.6rem; transition: color 0.2s; }
+    .aws-service-list li:last-child { border-bottom: none; }
+    .aws-service-list li:hover { color: var(--text); }
+    .aws-service-list li::before { content: '▸'; color: var(--aws); font-size: 0.6rem; flex-shrink: 0; }
 
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .skill-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .skill-card-tag { font-family: var(--mono); font-size: 0.62rem; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .skill-card h3 { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .skill-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; transition: border-color 0.2s; }
+    .project-card:hover { border-color: rgba(255,153,0,0.4); }
+    .project-card.featured { border-color: rgba(255,153,0,0.25); border-left: 3px solid var(--aws); }
+    .project-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .project-tag { font-family: var(--mono); font-size: 0.62rem; padding: 0.2rem 0.55rem; border-radius: 3px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .tag-aws  { background: rgba(255,153,0,0.1);  color: var(--aws);  border: 1px solid rgba(255,153,0,0.25);  }
+    .tag-iac  { background: rgba(124,58,237,0.1); color: #a78bfa;     border: 1px solid rgba(124,58,237,0.25); }
+    .tag-sec  { background: rgba(0,212,170,0.08); color: var(--teal); border: 1px solid rgba(0,212,170,0.2);  }
+    .tag-k8s  { background: rgba(56,189,248,0.08);color: #38bdf8;     border: 1px solid rgba(56,189,248,0.2); }
+    .project-card h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
+    .project-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; max-width: 640px; }
+    .project-link { font-family: var(--mono); font-size: 0.72rem; color: var(--teal); text-decoration: none; white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; padding-top: 0.25rem; transition: color 0.2s; }
+    .project-link:hover { color: #fff; }
+
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .cert-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+    .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+    .cert-item span { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .contact-text p { font-size: 1rem; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.75rem; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); text-decoration: none; padding: 0.9rem 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
+    .contact-link:hover { color: var(--text); border-color: var(--teal); }
+    .contact-link-label { font-size: 0.62rem; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-right: auto; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem clamp(1.5rem, 5vw, 4rem); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer p { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+    footer span { color: var(--aws); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .aws-focus { grid-template-columns: 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
 </head>
-
 <body>
 
-<header>
-    <h1>Emanuel G. Michea</h1>
-    <h2>Cloud Security Engineer | DevSecOps Specialist</h2>
-    <p>Secure by Design • AWS • Kubernetes • Terraform • Zero Trust</p>
+<nav>
+  <span class="nav-brand">egm · secure-by-design</span>
+  <ul class="nav-links">
+    <li><a href="#focus">AWS Focus</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Cloud Security · DevSecOps · Zero Trust</p>
+    <h1 class="hero-name">Emanuel G.<br/>Michea</h1>
+    <p class="hero-title">Cloud Security Engineer</p>
+    <p class="hero-bio">
+      I design <strong>AWS-first, Zero Trust infrastructure</strong> that is secure by default —
+      not patched after the fact. Terraform IaC, GitOps CI/CD pipelines, and container security
+      on ECS Fargate and EKS.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="https://linkedin.com/in/emanuelgm1998" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+      <a href="Emanuel_Michea_CV_DEV_ES.pdf" download class="btn btn-muted">Download CV</a>
+    </div>
+  </div>
 </header>
 
-<div class="container">
-
-    <div class="section">
-        <h2>About</h2>
-        <p>
-            Cloud Security Engineer focused on AWS, Kubernetes, Terraform and DevSecOps.
-            Specialized in building secure, scalable and automated cloud infrastructure
-            using Zero Trust principles and Infrastructure as Code.
-        </p>
-    </div>
-
-    <div class="section">
-        <h2>Core Skills</h2>
-
-        <div class="card">AWS Cloud Security & IAM</div>
-        <div class="card">DevSecOps & CI/CD Security</div>
-        <div class="card">Terraform Infrastructure as Code</div>
-        <div class="card">Kubernetes (EKS) Security</div>
-
-    </div>
-
-    <div class="section">
-        <h2>Projects</h2>
-
-        <div class="card">
-            <strong>Zero Trust AWS Framework</strong>
-            <p>Identity-based security architecture using AWS services and Zero Trust principles.</p>
-        </div>
-
-        <div class="card">
-            <strong>DevSecOps Infrastructure Platform</strong>
-            <p>Secure CI/CD pipelines with automated infrastructure provisioning.</p>
-        </div>
-
-        <div class="card">
-            <strong>Kubernetes Security Lab</strong>
-            <p>RBAC, network policies and container hardening practices.</p>
-        </div>
-
-    </div>
-
-    <div class="section">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:emanuelgm1998@gmail.com">emanuelgm1998@gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/">github.com</a></p>
-        <p>LinkedIn: <a href="https://linkedin.com/">linkedin.com</a></p>
-    </div>
-
+<div class="stack-bar">
+  <span class="stack-label">Stack</span>
+  <div class="stack-items">
+    <span class="stack-item highlight">AWS</span>
+    <span class="stack-item highlight">ECS Fargate</span>
+    <span class="stack-item highlight">Terraform</span>
+    <span class="stack-item">GitHub Actions</span>
+    <span class="stack-item highlight">IAM · Zero Trust</span>
+    <span class="stack-item">Kubernetes · EKS</span>
+    <span class="stack-item">CloudWatch</span>
+    <span class="stack-item">Secrets Manager</span>
+    <span class="stack-item">Docker · ECR</span>
+    <span class="stack-item">Sigstore · SBOM</span>
+  </div>
 </div>
 
+<section id="focus">
+  <p class="section-label">Primary Focus</p>
+  <h2 class="section-heading">AWS Cloud Security</h2>
+  <div class="aws-focus">
+    <div class="aws-focus-header">
+      <span class="aws-badge">AWS · Core Platform</span>
+      <h3>Production-grade AWS architecture — security and automation first</h3>
+    </div>
+    <ul class="aws-service-list">
+      <li>ECS Fargate — serverless container orchestration, no EC2 management</li>
+      <li>VPC multi-AZ — private subnets, Security Group segmentation, no direct internet</li>
+      <li>ALB — Layer 7 routing, health checks, TLS termination point</li>
+      <li>IAM Least Privilege — per-service roles, no wildcard policies</li>
+      <li>Secrets Manager — zero hardcoded credentials, KMS encryption at rest</li>
+      <li>ECR — private container registry, IAM-gated access, image scanning</li>
+    </ul>
+    <ul class="aws-service-list">
+      <li>CloudWatch — structured JSON logs, custom metrics, SLI/SLO dashboards</li>
+      <li>SNS — proactive alerting on CPU, 5xx rate, latency thresholds</li>
+      <li>Auto Scaling — target tracking for cost-optimized compute</li>
+      <li>CloudFormation / Terraform — 100% IaC, zero manual changes</li>
+      <li>GuardDuty · Security Hub · WAF — roadmap threat detection layer</li>
+      <li>Well-Architected Framework — security, reliability, cost efficiency pillars</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills">
+  <p class="section-label">Capabilities</p>
+  <h2 class="section-heading">Core Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <p class="skill-card-tag">Identity &amp; Access</p>
+      <h3>AWS IAM · Zero Trust</h3>
+      <p>Least-privilege role design per service, no long-lived access keys, OIDC federation for CI/CD. Every request authenticated and authorized at the control plane.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-tag">Infrastructure as Code</p>
+      <h3>Terraform · Modular IaC</h3>
+      <p>Modular Terraform with separate networking, compute, and security layers. Remote state with S3 + DynamoDB locking. Workspaces per environment.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-tag">CI/CD Security</p>
+      <h3>DevSecOps Pipelines</h3>
+      <p>GitHub Actions pipelines with security gates: build → scan (Trivy/Checkov) → push ECR → deploy ECS with zero-downtime rolling updates and automatic rollback.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-tag">Container Security</p>
+      <h3>ECS Fargate · EKS</h3>
+      <p>Non-root containers, read-only root filesystem, RBAC on Kubernetes, network policies, container image hardening with multi-stage builds.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-tag">Observability</p>
+      <h3>CloudWatch · SLI/SLO</h3>
+      <p>Structured JSON logging, custom application metrics, dashboard-driven SLI tracking, proactive SNS alerting before incidents impact users.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-card-tag">Supply Chain</p>
+      <h3>Sigstore · SBOM · OpenSSF</h3>
+      <p>Artifact signing with Sigstore, SBOM generation for full dependency visibility, OpenSSF Scorecard compliance for repository security posture.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-heading">Projects</h2>
+  <div class="projects-list">
+    <div class="project-card featured">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag tag-aws">AWS</span>
+          <span class="project-tag tag-iac">Terraform</span>
+          <span class="project-tag tag-sec">DevSecOps</span>
+        </div>
+        <h3>AWS DevSecOps Infrastructure Platform</h3>
+        <p>Production-grade multi-AZ platform: ECS Fargate behind ALB, modular Terraform, GitHub Actions GitOps pipeline with build → scan → ECR → ECS flow. IAM Least Privilege per service, Secrets Manager with KMS, CloudWatch SLI/SLO dashboards. Estimated cost per deployment cycle: ~$0.02.</p>
+      </div>
+      <a href="https://github.com/Emanuelgm1998/aws-devsecops-infrastructure" target="_blank" rel="noopener" class="project-link">View repo ↗</a>
+    </div>
+    <div class="project-card">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag tag-aws">AWS</span>
+          <span class="project-tag tag-sec">Zero Trust</span>
+        </div>
+        <h3>Zero Trust AWS Framework</h3>
+        <p>Identity-based security architecture — no implicit trust at any layer. IAM conditions, VPC endpoint policies, private subnets with no direct IGW path for workloads, all traffic routed through ALB with Security Group enforcement.</p>
+      </div>
+      <a href="https://github.com/Emanuelgm1998" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
+    </div>
+    <div class="project-card">
+      <div>
+        <div class="project-meta">
+          <span class="project-tag tag-k8s">Kubernetes</span>
+          <span class="project-tag tag-sec">Security</span>
+        </div>
+        <h3>Kubernetes Security Lab</h3>
+        <p>RBAC design with least-privilege service accounts, NetworkPolicy enforcement for pod-to-pod traffic, container hardening practices: non-root user, securityContext constraints, image scanning.</p>
+      </div>
+      <a href="https://github.com/Emanuelgm1998" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <p class="section-label">Credentials</p>
+  <h2 class="section-heading">Certifications</h2>
+  <div class="certs-grid">
+    <div class="cert-item"><span class="cert-dot"></span><span>LFD121 · Developing Secure Software</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>LFS183 · Introduction to Zero Trust</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>LFS169 · Introduction to GitOps</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>LFS158 · Introduction to Kubernetes</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>LFS182 · Securing Supply Chain with Sigstore</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>OpenSSF Scorecard &amp; SBOM Security</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>Cisco · Cybersecurity Defense Analyst</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>Cisco · Ethical Hacker</span></div>
+    <div class="cert-item"><span class="cert-dot"></span><span>Cisco · Cyber Threat Management</span></div>
+  </div>
+</section>
+
+<section id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="section-heading">Contact</h2>
+  <div class="contact-grid">
+    <div class="contact-text">
+      <p>Open to Cloud Security, DevSecOps, and AWS architecture roles — remote or Santiago, Chile. Let's talk about building infrastructure that is secure by design, not by accident.</p>
+      <a href="Emanuel_Michea_CV_DEV_ES.pdf" download class="btn btn-primary">Download CV (PDF)</a>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:emanuelgm1998@gmail.com" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        emanuelgm1998@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/emanuelgm1998" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        linkedin.com/in/emanuelgm1998
+      </a>
+      <a href="https://github.com/Emanuelgm1998" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-label">GitHub</span>
+        github.com/Emanuelgm1998
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer>
-    Secure by Design • Cloud Security Engineering Portfolio
+  <p>Emanuel G. Michea · <span>Secure by Design</span></p>
+  <p>Cloud Security Engineering · Santiago, Chile</p>
 </footer>
 
 </body>
