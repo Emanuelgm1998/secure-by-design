@@ -1,3 +1,4 @@
+
 <div align="center">
 
 <img src="https://img.shields.io/badge/status-live-22c55e?style=flat-square" />
@@ -5,10 +6,7 @@
 <img src="https://img.shields.io/github/actions/workflow/status/Emanuelgm1998/secure-by-design/pages.yml?branch=main&label=deploy&style=flat-square&logo=github-actions&logoColor=white" />
 &nbsp;
 <img src="https://img.shields.io/badge/HTTPS-enforced-38bdf8?style=flat-square&logo=letsencrypt&logoColor=white" />
-&nbsp;
-<img src="https://img.shields.io/github/last-commit/Emanuelgm1998/secure-by-design?style=flat-square&color=64748b" />
 
-<br/><br/>
 
 # secure-by-design
 
@@ -24,13 +22,13 @@
 
 ---
 
-## What this is
+## Overview
 
 Public portfolio for **Emanuel G. Michea** — Cloud Security & DevSecOps Engineer based in Santiago, Chile.
 
-The site itself is engineered, not just designed: no frameworks, no build step, no runtime dependencies. A single `index.html` deployed via GitHub Actions to GitHub Pages — HTTPS enforced, globally cached, zero maintenance overhead.
+The site itself reflects the same engineering principles applied to production infrastructure: no frameworks, no build step, no runtime dependencies. A single `index.html` deployed via GitHub Actions to GitHub Pages — HTTPS enforced, globally cached, zero maintenance overhead.
 
-> The stack choice is intentional. A portfolio for a security engineer should have the smallest possible attack surface.
+> A portfolio for a security engineer should have the smallest possible attack surface. Zero dependencies means zero supply chain risk.
 
 ---
 
@@ -60,13 +58,16 @@ Developer                  GitHub                        CDN
     │                  └──────────────────────────────┘    │
 ```
 
-**Trigger:** every push to `main`
-**Deploy time:** ~25 seconds
-**Downtime:** zero — atomic swap via Pages CDN
+| Property | Value |
+|---|---|
+| Trigger | Every push to `main` |
+| Deploy time | ~25 seconds |
+| Downtime | Zero — atomic swap via Pages CDN |
+| Dependencies | Zero |
 
 ---
 
-## Workflow
+## Security decisions
 
 ```yaml
 # .github/workflows/pages.yml
@@ -80,10 +81,11 @@ permissions:
   id-token: write        # OIDC — no static deploy tokens
 ```
 
-Security decisions in the workflow:
+Every permission is explicitly scoped:
+
 - `contents: read` — runner cannot write back to the repo
-- `id-token: write` — uses OIDC federation, no long-lived secrets stored
-- No third-party actions beyond official `actions/*` org
+- `id-token: write` — OIDC federation, no long-lived secrets stored anywhere
+- No third-party actions beyond the official `actions/*` org — full supply chain control
 
 ---
 
@@ -91,9 +93,9 @@ Security decisions in the workflow:
 
 | Layer | Choice | Rationale |
 |---|---|---|
-| Markup | HTML5 semantic | Screen readers, SEO, no transpilation |
-| Style | CSS custom properties | Zero runtime, theme tokens in one place |
-| Fonts | Google Fonts (IBM Plex Mono · Inter · Syne) | Loaded async, no render block |
+| Markup | HTML5 semantic | Accessibility, SEO, zero transpilation |
+| Style | CSS custom properties | Zero runtime, design tokens in one place |
+| Fonts | Google Fonts (IBM Plex Mono · Inter · Syne) | Async load, no render blocking |
 | Deploy | GitHub Actions → Pages | Native OIDC, no external CI dependency |
 | TLS | GitHub Pages (Let's Encrypt) | Automatic renewal, HSTS enforced |
 | Dependencies | **Zero** | No npm, no bundler, no attack surface |
@@ -102,28 +104,29 @@ Security decisions in the workflow:
 
 ## Site sections
 
-| Section | Purpose |
+| Section | Content |
 |---|---|
-| Hero | Name, title, bio, CTA — view projects / LinkedIn / CV download |
-| AWS Focus | Primary specialization: ECS Fargate, VPC, IAM, Secrets Manager, CloudWatch |
+| Hero | Name, title, bio, CTAs |
+| AWS Focus | ECS Fargate, VPC, IAM, Secrets Manager, CloudWatch, Well-Architected |
 | Core Skills | IAM Zero Trust · Terraform IaC · DevSecOps pipelines · Container security · Observability · Supply chain |
-| Projects | AWS DevSecOps Infrastructure Platform · Zero Trust Framework · Kubernetes Security Lab |
+| Projects | AWS DevSecOps Infrastructure Platform |
 | Certifications | Linux Foundation (6) · Cisco (3) |
-| Contact | Email · LinkedIn · GitHub · CV (PDF download) |
+| Contact | Email · LinkedIn · GitHub |
 
 ---
 
 ## Featured project
 
 **[aws-devsecops-infrastructure](https://github.com/Emanuelgm1998/aws-devsecops-infrastructure)**
-Production-grade multi-AZ AWS platform — ECS Fargate, modular Terraform, GitHub Actions GitOps, IAM Least Privilege, Secrets Manager, CloudWatch SLI/SLO. ~$0.02 per ephemeral deployment cycle.
+
+Production-oriented multi-AZ AWS platform — ECS Fargate behind ALB, modular Terraform, GitHub Actions GitOps pipeline, IAM Least Privilege per service, Secrets Manager with KMS, CloudWatch SLI/SLO dashboards. Ephemeral deployment cost: ~$0.02 per cycle.
 
 ---
 
 ## Local preview
 
 ```bash
-# No install required — open directly
+# No install required
 open index.html
 
 # Or serve locally
@@ -134,6 +137,16 @@ python3 -m http.server 8080
 ---
 
 ## Engineer
+
+**Emanuel G. Michea**
+Cloud Security & DevSecOps Engineer · Santiago, Chile
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-secure--by--design-0f172a?style=flat-square&logo=github)](https://emanuelgm1998.github.io/secure-by-design/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Emanuel%20G.%20Michea-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/emanuelgm1998)
+[![GitHub](https://img.shields.io/badge/GitHub-Emanuelgm1998-181717?style=flat-square&logo=github)](https://github.com/Emanuelgm1998)
+
+> *Building infrastructure that is secure by design, not by accident.*
+
 
 **Emanuel G. Michea**
 Cloud Security & DevSecOps Engineer · Santiago, Chile
