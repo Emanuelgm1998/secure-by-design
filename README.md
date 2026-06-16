@@ -138,8 +138,6 @@ python3 -m http.server 8080
 
 ## Engineer
 
-**Emanuel G. Michea**
-Cloud Security & DevSecOps Engineer · Santiago, Chile
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-secure--by--design-0f172a?style=flat-square&logo=github)](https://emanuelgm1998.github.io/secure-by-design/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Emanuel%20G.%20Michea-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/emanuelgm1998)
