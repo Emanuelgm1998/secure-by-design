@@ -1,8 +1,3 @@
-Aquí tienes el **README completo listo para copiar y pegar** en GitHub Pages / repo sin que tengas que tocar nada más:
-
-```md
-# 🔐 secure-by-design
-
 <div align="center">
 
 <img src="https://img.shields.io/badge/status-live-22c55e?style=flat-square" />
@@ -15,164 +10,135 @@ Aquí tienes el **README completo listo para copiar y pegar** en GitHub Pages / 
 
 <br/><br/>
 
+# secure-by-design
+
 **Cloud Security & DevSecOps Engineering Portfolio**
 
-Zero Trust · AWS-first · Terraform IaC · GitOps · Secure by Design
+*Zero Trust · AWS-first · Terraform IaC · GitOps*
 
 <br/>
 
-🔗 https://emanuelgm1998.github.io/secure-by-design/
+**[→ emanuelgm1998.github.io/secure-by-design](https://emanuelgm1998.github.io/secure-by-design/)**
 
 </div>
 
 ---
 
-## 📌 Overview
+## What this is
 
-Portfolio profesional de **Emanuel G. Michea** — Cloud Security & DevSecOps Engineer (Santiago, Chile).
+Public portfolio for **Emanuel G. Michea** — Cloud Security & DevSecOps Engineer based in Santiago, Chile.
 
-Este proyecto no es solo un sitio web: es una demostración de ingeniería enfocada en seguridad, minimalismo y reducción de superficie de ataque.
+The site itself is engineered, not just designed: no frameworks, no build step, no runtime dependencies. A single `index.html` deployed via GitHub Actions to GitHub Pages — HTTPS enforced, globally cached, zero maintenance overhead.
 
-- Sin frameworks
-- Sin build step
-- Sin dependencias externas
-- Sin runtime innecesario
-
-👉 Solo HTML + CSS + GitHub Actions + GitHub Pages
-
-> Diseño intencional: menos complejidad = menos superficie de ataque.
+> The stack choice is intentional. A portfolio for a security engineer should have the smallest possible attack surface.
 
 ---
 
-## 🧠 Architecture (Secure-by-Design)
+## Architecture
 
 ```
+Developer                  GitHub                        CDN
+    │                         │                           │
+    ├── git push ─────────────►│                           │
+    │                         │                           │
+    │                  ┌──────▼──────────────────────┐    │
+    │                  │       GitHub Actions          │    │
+    │                  │                              │    │
+    │                  │  1. actions/checkout@v4      │    │
+    │                  │  2. actions/configure-pages@v5│   │
+    │                  │  3. actions/upload-pages-     │    │
+    │                  │     artifact@v3               │    │
+    │                  │  4. actions/deploy-pages@v4  │    │
+    │                  └──────────────┬───────────────┘    │
+    │                                 │                    │
+    │                                 ▼                    │
+    │                  ┌──────────────────────────────┐    │
+    │                  │       GitHub Pages            │    │
+    │                  │   HTTPS · Global edge cache  ├───►│
+    │                  │   emanuelgm1998.github.io/   │    │
+    │                  │      secure-by-design/        │    │
+    │                  └──────────────────────────────┘    │
+```
 
-Developer → GitHub → GitHub Actions → GitHub Pages (CDN)
-
-````
-
-### Flow de despliegue
-
-- Push a `main`
-- GitHub Actions ejecuta pipeline
-- Artifact generado y desplegado a Pages
-- CDN global con TLS automático (Let’s Encrypt)
-
-### Características clave
-
-- 🔐 Deploy sin secretos (OIDC)
-- ⚡ Deploy atómico (~25s)
-- 🌍 Edge caching global
-- 🚫 Cero downtime
+**Trigger:** every push to `main`
+**Deploy time:** ~25 seconds
+**Downtime:** zero — atomic swap via Pages CDN
 
 ---
 
-## ⚙️ CI/CD Pipeline (GitHub Actions)
+## Workflow
 
 ```yaml
+# .github/workflows/pages.yml
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 permissions:
   contents: read
   pages: write
-  id-token: write  # OIDC authentication (no static tokens)
-````
+  id-token: write        # OIDC — no static deploy tokens
+```
 
-### Seguridad aplicada
-
-* ❌ Sin PATs (Personal Access Tokens)
-* ❌ Sin secretos hardcodeados
-* ✅ OIDC federation
-* ✅ Permisos mínimos (least privilege)
-* ✅ Solo actions oficiales (`actions/*`)
+Security decisions in the workflow:
+- `contents: read` — runner cannot write back to the repo
+- `id-token: write` — uses OIDC federation, no long-lived secrets stored
+- No third-party actions beyond official `actions/*` org
 
 ---
 
-## 🧱 Tech Stack
+## Stack
 
-| Layer   | Technology                   | Rationale                      |
-| ------- | ---------------------------- | ------------------------------ |
-| UI      | HTML5 semantic               | Accesible + SEO + zero tooling |
-| Styling | CSS variables                | Theming sin runtime            |
-| Fonts   | Inter · IBM Plex Mono · Syne | Performance + legibilidad      |
-| CI/CD   | GitHub Actions               | Native + OIDC                  |
-| Hosting | GitHub Pages                 | TLS + CDN global               |
-| Infra   | Zero dependencies            | Reduced attack surface         |
-
----
-
-## 🧩 Key Features
-
-* 🔐 Zero Trust mindset aplicado a frontend deployment
-* 🚀 GitOps workflow con GitHub Actions
-* 🌐 HTTPS enforcement automático
-* 📦 Deploy sin build system (no Node, no npm)
-* 📊 Arquitectura reproducible y audit-friendly
+| Layer | Choice | Rationale |
+|---|---|---|
+| Markup | HTML5 semantic | Screen readers, SEO, no transpilation |
+| Style | CSS custom properties | Zero runtime, theme tokens in one place |
+| Fonts | Google Fonts (IBM Plex Mono · Inter · Syne) | Loaded async, no render block |
+| Deploy | GitHub Actions → Pages | Native OIDC, no external CI dependency |
+| TLS | GitHub Pages (Let's Encrypt) | Automatic renewal, HSTS enforced |
+| Dependencies | **Zero** | No npm, no bundler, no attack surface |
 
 ---
 
-## 📂 Site Structure
+## Site sections
 
-| Section        | Description                                       |
-| -------------- | ------------------------------------------------- |
-| Hero           | Branding personal + CTA                           |
-| Cloud Security | AWS, IAM, Zero Trust, DevSecOps                   |
-| Skills         | Terraform · Kubernetes · Observability · Security |
-| Projects       | Infra AWS + Security Labs                         |
-| Certifications | Linux Foundation · Cisco                          |
-| Contact        | LinkedIn · GitHub · CV                            |
-
----
-
-## 🚀 Featured Project
-
-### 🔗 AWS DevSecOps Infrastructure Platform
-
-[https://github.com/Emanuelgm1998/aws-devsecops-infrastructure](https://github.com/Emanuelgm1998/aws-devsecops-infrastructure)
-
-Plataforma cloud production-ready con enfoque en seguridad:
-
-* AWS ECS Fargate
-* Terraform modular (IaC)
-* IAM least privilege
-* Secrets Manager
-* CloudWatch observability
-* GitHub Actions GitOps
-* Cost optimization (~$0.02 per deploy cycle)
+| Section | Purpose |
+|---|---|
+| Hero | Name, title, bio, CTA — view projects / LinkedIn / CV download |
+| AWS Focus | Primary specialization: ECS Fargate, VPC, IAM, Secrets Manager, CloudWatch |
+| Core Skills | IAM Zero Trust · Terraform IaC · DevSecOps pipelines · Container security · Observability · Supply chain |
+| Projects | AWS DevSecOps Infrastructure Platform · Zero Trust Framework · Kubernetes Security Lab |
+| Certifications | Linux Foundation (6) · Cisco (3) |
+| Contact | Email · LinkedIn · GitHub · CV (PDF download) |
 
 ---
 
-## 💻 Local Development
+## Featured project
+
+**[aws-devsecops-infrastructure](https://github.com/Emanuelgm1998/aws-devsecops-infrastructure)**
+Production-grade multi-AZ AWS platform — ECS Fargate, modular Terraform, GitHub Actions GitOps, IAM Least Privilege, Secrets Manager, CloudWatch SLI/SLO. ~$0.02 per ephemeral deployment cycle.
+
+---
+
+## Local preview
 
 ```bash
+# No install required — open directly
+open index.html
+
+# Or serve locally
 python3 -m http.server 8080
-```
-
-Abrir:
-
-```
-http://localhost:8080
+# → http://localhost:8080
 ```
 
 ---
 
-## 🧭 Engineering Philosophy
-
-* Security by default, not by add-on
-* Minimal attack surface over complexity
-* Infrastructure as Code > manual configuration
-* Reproducibility over abstraction
-* Transparency over black-box systems
-
----
-
-## 👤 Author
+## Engineer
 
 **Emanuel G. Michea**
-Cloud Security & DevSecOps Engineer — Santiago, Chile
+Cloud Security & DevSecOps Engineer · Santiago, Chile
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-secure--by--design-0f172a?style=flat-square&logo=github)](https://emanuelgm1998.github.io/secure-by-design/) mejora el readme mejoral
 
 🔗 Portfolio: [https://emanuelgm1998.github.io/secure-by-design](https://emanuelgm1998.github.io/secure-by-design)
 🔗 GitHub: [https://github.com/Emanuelgm1998](https://github.com/Emanuelgm1998)
