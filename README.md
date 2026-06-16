@@ -138,8 +138,4 @@ python3 -m http.server 8080
 **Emanuel G. Michea**
 Cloud Security & DevSecOps Engineer · Santiago, Chile
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-secure--by--design-0f172a?style=flat-square&logo=github)](https://emanuelgm1998.github.io/secure-by-design/) mejora el readme mejoral
 
-🔗 Portfolio: [https://emanuelgm1998.github.io/secure-by-design](https://emanuelgm1998.github.io/secure-by-design)
-🔗 GitHub: [https://github.com/Emanuelgm1998](https://github.com/Emanuelgm1998)
-🔗 LinkedIn:  [https://www.linkedin.com/in/emanuel-gonzalez-michea/)
