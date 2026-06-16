@@ -152,3 +152,12 @@ Cloud Security & DevSecOps Engineer · Santiago, Chile
 Cloud Security & DevSecOps Engineer · Santiago, Chile
 
 
+
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+Copyright (c) 2026 Emanuel G. Michea
